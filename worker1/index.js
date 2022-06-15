@@ -1,31 +1,32 @@
 const Parser = require("rss-parser");
+const cron = require('node-cron');
 require('dotenv').config();
 
-(async function main() {
+const PostController = require("./controllers/PostController");
+const CategoriesController = require("./controllers/CategoriesController");
+
+(function main() {
   const parser = new Parser();
-  const feed = await parser.parseURL(process.env.RSS_FEED_URL);
+  cron.schedule('0 * * * *', async () => {
+    const {items} = await parser.parseURL(process.env.RSS_FEED_URL);
+    console.log(`[worker1]: main() cron-job at ${new Date()}`, items);
+    let categories = [];
+    let promises = [];
 
-  let items = [];
+    items.forEach((item) => {
+      promises.push(PostController.createPost(item))
+      categories.push(...item.categories)
+    });
 
+    [...new Set(categories)].forEach((item) => {
+      promises.push(CategoriesController.createCategory(item))
+    })
+    console.log(promises.length);
+    Promise.all(promises)
+      .then(values => {
+        console.log(`[worker1]: at ${new Date()} executed ${values.length} promises`);
+      })
+  });
 
 })();
 
-function isEquivalent(a, b) {
-  let aProps = Object.getOwnPropertyNames(a);
-  let bProps = Object.getOwnPropertyNames(b);
-
-  if (aProps.length != bProps.length) {
-    return false;
-  }
-
-  for (let i = 0; i < aProps.length; i++) {
-    let propName = aProps[i];
-
-    if (a[propName] !== b[propName]) {
-      return false;
-    }
-  }
-
-  // if we made it this far, objects are considered equivalent
-  return true;
-}

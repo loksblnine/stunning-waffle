@@ -5,7 +5,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      default: "nextval('city_city_id_seq'::regclass)"
     },
     creator: {
       type: DataTypes.TEXT,
@@ -27,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    contentSnippet: {
+    content_snippet: {
       type: DataTypes.TEXT,
       allowNull: false
     }
