@@ -6,13 +6,13 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
 import {ACTIONS} from "../../utils/constants";
-import './Header.css';
+import './header.css';
 import {useAppSelector} from "../../store/hooks";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.users.user.role);
+  const user = useAppSelector((state) => state.user.role);
 
   const logOut = () => {
     dispatch({

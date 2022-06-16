@@ -1,3 +1,5 @@
+import Blog from "../components/content/guest/Blog";
+
 export const API_URL = "http://localhost:5000";
 
 export const ACTIONS = {
@@ -14,17 +16,17 @@ export const ACTIONS = {
     LOG_OUT: "LOG_OUT",
   }
 };
-
-export const authAdminRoutes = [
-  {
-    path: '/admin',
-    Component: <AdminPanel />
-  },
-  {
-    path: '/posts',
-    Component: <PostsList />
-  },
-];
+//
+// export const authAdminRoutes = [
+//   {
+//     path: '/admin',
+//     Component: <AdminPanel />
+//   },
+//   {
+//     path: '/posts',
+//     Component: <PostsList />
+//   },
+// ];
 
 export const guestRoutes = [
   {
