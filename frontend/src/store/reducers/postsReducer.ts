@@ -23,6 +23,7 @@ const postsReducer = (state = initialState, action: { type: string; payload: any
         return {
           ...state,
           items: state.items.concat(action.payload),
+          filteredItems: state.items.concat(action.payload),
           isReady: true,
           loadNext: false
         };
@@ -30,6 +31,7 @@ const postsReducer = (state = initialState, action: { type: string; payload: any
       return {
         ...state,
         items: state.items.concat(action.payload),
+        filteredItems: state.items.concat(action.payload),
         isReady: true,
         page: state.page + 1
       };
@@ -44,6 +46,7 @@ const postsReducer = (state = initialState, action: { type: string; payload: any
       return {
         ...state,
         items: array,
+        filteredItems: array,
       };
     }
     case ACTIONS.POSTS.SET_READY_POSTS: {
@@ -56,12 +59,14 @@ const postsReducer = (state = initialState, action: { type: string; payload: any
       return {
         ...state,
         items: state.items.concat(action.payload),
+        filteredItems: state.items.concat(action.payload),
       };
     }
     case ACTIONS.POSTS.DELETE_POST: {
       return {
         ...state,
         items: state.items.filter((item: any) => item.id !== action.payload),
+        filteredItems: state.items.filter((item: any) => item.id !== action.payload),
       };
     }
     default:

@@ -1,10 +1,9 @@
 import axios from "axios";
-import {API_URL} from "../utils/constants";
 
-export const apiGet = axios.create({baseURL: API_URL})
-export const apiPost = axios.create({baseURL: API_URL})
-export const apiDelete = axios.create({baseURL: API_URL})
-export const apiPut = axios.create({baseURL: API_URL})
+export const apiGet = axios.create({baseURL: "http://localhost:5000"})
+export const apiPost = axios.create({baseURL: "http://localhost:5000"})
+export const apiDelete = axios.create({baseURL: "http://localhost:5000"})
+export const apiPut = axios.create({baseURL: "http://localhost:5000"})
 
 apiGet.interceptors.request.use((config) => {
   config.method = "get";

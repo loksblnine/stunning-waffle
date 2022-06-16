@@ -1,7 +1,5 @@
 import Blog from "../components/content/guest/Blog";
 
-export const API_URL = "http://localhost:5000";
-
 export const ACTIONS = {
   POSTS: {
     SET_POSTS: "POSTS.SET_POSTS",
@@ -31,6 +29,6 @@ export const ACTIONS = {
 export const guestRoutes = [
   {
     path: '/blog',
-    Component: <Blog />
+    Component: <Blog/>
   }
-]
+];

@@ -9,7 +9,6 @@ const store = configureStore({
   middleware: [thunk, logger]
 });
 
-
 export default store;
 
 export type RootState = ReturnType<typeof store.getState>
