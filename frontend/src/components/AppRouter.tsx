@@ -7,7 +7,7 @@ import {authAdminRoutes, guestRoutes} from "../utils/constants";
 import {useAppSelector} from "../store/hooks";
 
 const AppRouter = () => {
-  const role = useAppSelector((state) => state.users.user);
+  const role = useAppSelector((state) => state.user.role);
 
   return (
     <Routes>
