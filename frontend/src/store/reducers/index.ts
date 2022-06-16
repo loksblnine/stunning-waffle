@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 
 import posts from './postsReducer';
-import users from './userReducer'
+import user from "./userReducer";
 
 const appReducer = combineReducers({
-  users,
+  user,
   posts
 });
 

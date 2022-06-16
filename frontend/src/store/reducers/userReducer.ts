@@ -1,10 +1,5 @@
-import jwt_decode from "jwt-decode";
 import {ACTIONS} from "../../utils/constants";
 
-type Decoded = {
-  email: string,
-  role: number
-}
 type initialState = {
   isReady: boolean,
   role: number,
