@@ -45,7 +45,7 @@ export const addPost = (post: Post) => {
   return async (dispatch: any) => {
     const {data} = await apiPost({
       data: post,
-      url: "/customers"
+      url: "/posts"
     })
     dispatch({
       type: ACTIONS.POSTS.ADD_POST,
@@ -57,7 +57,7 @@ export const addPost = (post: Post) => {
 export const deletePost = (id: number) => {
   return async (dispatch: any) => {
     await apiDelete({
-      url: `/customers/${id}`
+      url: `/posts/${id}`
     })
     dispatch({
       type: ACTIONS.POSTS.DELETE_POST,

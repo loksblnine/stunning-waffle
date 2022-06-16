@@ -5,6 +5,7 @@ import {Spinner} from "react-bootstrap";
 import EditPost from "./EditPost";
 import {ARROWS_SVG, COLLAPSE_ARROWS, EXPAND_ARROWS} from "../../../utils/svg";
 import {handleTitleInput} from "../../../utils/utils";
+import AddPost from "./AddPost";
 
 const Blog = () => {
   const dispatch = useAppDispatch();
@@ -15,19 +16,14 @@ const Blog = () => {
   const initialState = {
     master_name: "",
     master_id: -1,
-    city_id: -1,
     masters: [],
-    work_id: "",
-    isDone: "",
-    from: '',
-    to: '',
   };
   const [queryParams, setQueryParams] = useState(initialState);
 
   const initSortParams = {
     id: '',
-  }
-  const [sortParams, setSortParams] = useState(initSortParams)
+  };
+  const [sortParams, setSortParams] = useState(initSortParams);
 
   const postPage = useAppSelector((state) => state.posts.page);
   const loadNext = useAppSelector((state) => state.posts.loadNext);
@@ -46,20 +42,20 @@ const Blog = () => {
   }, [postPage]);
 
   const handleSort = (e: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, paramName: string) => {
-    e.preventDefault()
+    e.preventDefault();
     switch (paramName) {
       case "id": {
         setSortParams(prevState => ({
           id: prevState.id === "ASC" ? "DESC" : "ASC"
-        }))
-        dispatch(sortPosts(["id", sortParams.id]))
-        break
+        }));
+        dispatch(sortPosts(["id", sortParams.id]));
+        break;
       }
       default: {
-        break
+        break;
       }
     }
-  }
+  };
 
   if (!arePostsReady) {
     return <Spinner animation="grow"/>;
@@ -100,7 +96,7 @@ const Blog = () => {
           <div className="form-group d-row">
             <button className="btn btn-outline-secondary"
                     onClick={() => {
-                      dispatch({type: "POSTS.CLEAR_FILTERED"})
+                      dispatch({type: "POSTS.CLEAR_FILTERED"});
                       setQueryParams(initialState);
                     }}>Clear
             </button>
@@ -110,7 +106,8 @@ const Blog = () => {
       <table className="table mt-5 text-justify">
         <thead>
         <tr>
-          <th scope="col" onClick={(e) => handleSort(e, "id")}># {sortParams.id === "ASC" ? ARROWS_SVG.ASC : ARROWS_SVG.DESC}</th>
+          <th scope="col"
+              onClick={(e) => handleSort(e, "id")}># {sortParams.id === "ASC" ? ARROWS_SVG.ASC : ARROWS_SVG.DESC}</th>
           <th scope="col">Creator</th>
           <th scope="col">Title</th>
           <th scope="col">Link</th>
@@ -144,6 +141,7 @@ const Blog = () => {
           </button>
         </div>
       }
+      <AddPost/>
     </div>
   );
 };

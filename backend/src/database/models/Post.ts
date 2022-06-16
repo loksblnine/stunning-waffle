@@ -8,7 +8,8 @@ export interface IPost {
   title: string,
   isoDate: string,
   content: string,
-  content_snippet: string
+  content_snippet: string,
+  active: boolean
 }
 
 export type IPostInput = Optional<IPost, 'creator' & 'link' & 'title' & 'isoDate' & 'content' & 'content_snippet'>;
@@ -22,6 +23,7 @@ export class Post extends Model<IPost, IPostInput> implements IPost {
   public isoDate!: string;
   public content!: string;
   public content_snippet!: string;
+  public active!: boolean;
 }
 
 Post.init({
@@ -54,6 +56,10 @@ Post.init({
     content_snippet: {
       type: DataTypes.TEXT,
       allowNull: false,
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
     }
   },
   {

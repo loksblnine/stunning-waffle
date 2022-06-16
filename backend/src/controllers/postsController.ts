@@ -4,17 +4,20 @@ import {Op} from "sequelize";
 
 export const createPost = async (request: Request, response: Response): Promise<void> => {
   try {
-    const post: Post = await Post.create(
-      request.body
+    console.log(request.body);
+    const {creator, link, content, content_snippet, isoDate, title, active} = request.body;
+    const post: Post = await Post.create({
+        creator, link, content, content_snippet, isoDate, title, active
+      }
     );
     response.status(201).json(post);
   } catch (e: any) {
-    console.log(`backend at ${new Date} [postsController] createPost: `, e.ToString());
     response.status(500).json("Something went wrong");
   }
 };
 
 interface WhereType {
+  active: boolean;
   title?: {
     [Op.iLike]: string
   }
@@ -24,7 +27,7 @@ export const getPosts = async (request: Request, response: Response): Promise<vo
   try {
     const page: string = request.params.page;
     const offset: number = 10 * Number(page);
-    const where: WhereType = {};
+    const where: WhereType = {active: true};
     if (request?.query?.title?.length) {
       where.title = {[Op.iLike]: `%${request.query.title}%`};
     }
@@ -60,11 +63,23 @@ export const getPostById = async (request: Request, response: Response): Promise
 export const deletePostById = async (request: Request, response: Response): Promise<void> => {
   try {
     const id: string = request.params.id;
-    await Post.destroy({
+    const post = await Post.findOne({
       where: {
         id
-      }
+      },
+      raw: true
     });
+    // @ts-ignore
+    post.active = false;
+    await Post.update({
+        ...post
+      },
+      {
+        where: {
+          id
+        }
+      }
+    );
     response.status(200).json(`Post #${id} was removed successfully`);
   } catch (e: any) {
     response.status(500).json("Something went wrong");

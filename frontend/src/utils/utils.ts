@@ -15,7 +15,7 @@ export const hasNumber = (myString: string) => {
   return /\d/.test(myString);
 };
 
-export const handleTitleInput = (e: ChangeEvent<HTMLInputElement>, setQueryParams: { (value: SetStateAction<{ master_name: string; master_id: number; city_id: number; masters: never[]; work_id: string; isDone: string; from: string; to: string; }>): void; (arg0: { (prevState: any): any; (prevState: { masters: any; }): { master_name: any; master_id: any; masters: any[]; }; (prevState: any): any; }): void; }, setMastersList: { (value: SetStateAction<never[]>): void; (arg0: any): void; }, dispatch: Dispatch<any>) => {
+export const handleTitleInput = (e: ChangeEvent<HTMLInputElement>, setQueryParams: { (value: SetStateAction<{ master_name: string; master_id: number; masters: never[]; }>): void; (arg0: { (prevState: any): any; (prevState: { masters: any; }): { master_name: any; master_id: any; masters: any[]; }; (prevState: any): any; }): void; }, setMastersList: { (value: SetStateAction<never[]>): void; (arg0: any): void; }, dispatch: Dispatch<any>) => {
   e.preventDefault();
   const {name, value} = e.target;
   if (!hasNumber(value)) {
