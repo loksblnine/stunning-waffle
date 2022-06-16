@@ -1,0 +1,41 @@
+version: "3"
+services:
+  postgres:
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_PASSWORD=nutter01
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: "../nginx"
+    ports:
+      - "3050:80"
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: "../backend"
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      - PGUSER=postgres
+      - PGHOST=localhost
+      - PGDATABASE=devit
+      - PGPASSWORD=nutter01
+      - PGPORT=5432
+      - NODE_ENV=development
+      - RSS_FEED_URL=https://lifehacker.com/rss
+      - SECRET_KEY=random123
+  client:
+    stdin_open: true
+
+    build:
+      dockerfile: Dockerfile
+      context: "../frontend"
+    volumes:
+      - /app/node_modules
+      - ./client:/app
