@@ -12,7 +12,7 @@ import {useAppSelector} from "../../store/hooks";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useAppSelector((state) => state.user.role);
+  const role = useAppSelector((state) => state.user.role);
 
   const logOut = () => {
     dispatch({
@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <Navbar>
       <Container>
-        {(user.role > 0) ?
+        {(role === 'ADMIN') ?
           <Nav className="ml-auto" style={{color: 'white'}}>
             <button onClick={() => navigate('/blog')}
                     className="btn btn-xl"
@@ -49,12 +49,12 @@ const Header = () => {
             <button className="btn btn-xl"
                     onClick={() => navigate('/blog')}
             >
-              Блог
+              Blog
             </button>
             <button className="btn btn-xl"
                     onClick={() => navigate('/login')}
             >
-              Авторизация
+              Log in
             </button>
           </Nav>
         }

@@ -2,14 +2,13 @@ import jwt, {JwtPayload} from "jsonwebtoken";
 import {NextFunction, Request, Response} from "express";
 
 export const authMiddleware = (request: Request, response: Response, next: NextFunction): void => {
-  return next();
   try {
     const token = String(request?.headers?.authorization?.split(' ')[1]);
     if (!token) {
       response.status(401).json({message: "Не авторизован"});
     }
     const decoded = jwt.verify(token, String(process.env.SECRET_KEY)) as JwtPayload;
-    if (decoded?.role === 1) {
+    if (decoded?.role === 'ADMIN') {
       request.body.user = decoded;
       next();
     } else {

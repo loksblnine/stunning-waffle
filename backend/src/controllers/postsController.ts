@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import {Post} from "../database/models";
+import {Op} from "sequelize";
 
 export const createPost = async (request: Request, response: Response): Promise<void> => {
   try {
@@ -12,14 +13,27 @@ export const createPost = async (request: Request, response: Response): Promise<
     response.status(500).json("Something went wrong");
   }
 };
+
+interface WhereType {
+  title?: {
+    [Op.iLike]: string
+  }
+}
+
 export const getPosts = async (request: Request, response: Response): Promise<void> => {
   try {
     const page: string = request.params.page;
     const offset: number = 10 * Number(page);
+    const where: WhereType = {};
+    if (request?.query?.title?.length) {
+      where.title = {[Op.iLike]: `%${request.query.title}%`};
+    }
     const posts: Post[] = await Post.findAll({
       order: [
         ["id", "ASC"]
       ],
+      // @ts-ignore
+      where,
       offset,
       limit: 10,
       raw: true

@@ -11,10 +11,10 @@ type Post = {
   content_snippet: string
 }
 
-export const setPosts = (page: number) => {
+export const setPosts = (page: number, queryString: string) => {
   return async (dispatch: any) => {
     const {data}: any = await apiGet({
-      url: `/posts/offset/${page}`
+      url: `/posts/offset/${page}?${queryString}`
     })
     dispatch({
       type: ACTIONS.POSTS.SET_POSTS,
@@ -63,5 +63,14 @@ export const deletePost = (id: number) => {
       type: ACTIONS.POSTS.DELETE_POST,
       payload: id
     });
+  }
+}
+
+export const sortPosts = (param: string[]) => {
+  return (dispatch: any) => {
+    dispatch({
+      type: ACTIONS.POSTS.SORT,
+      payload: param
+    })
   }
 }

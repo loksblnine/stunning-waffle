@@ -10,6 +10,7 @@ const appReducer = combineReducers({
 
 const rootReducer = (state: any, action: any) => {
   if (action.type === "LOG_OUT") {
+    localStorage.removeItem('token');
     state = undefined;
   }
   return appReducer(state, action);

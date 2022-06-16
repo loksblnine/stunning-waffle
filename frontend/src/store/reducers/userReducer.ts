@@ -15,11 +15,6 @@ const initialState: initialState = {
 const userReducer = (state = initialState, action: { type: string; payload: any; }) => {
   switch (action.type) {
     case ACTIONS.USER.SET_USER: {
-      /*set to action
-      const {token} = action.payload;
-      localStorage.setItem('token', token);
-      let decoded: Decoded = jwt_decode(token);
-      */
       return {
         ...state,
         role: action.payload.role,

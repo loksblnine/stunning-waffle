@@ -39,9 +39,9 @@ const postsReducer = (state = initialState, action: { type: string; payload: any
     case ACTIONS.POSTS.UPDATE_POST: {
       const array = state.items.map((item: any) => {
         if (item.id == action.payload.id) {
-          return action.payload
+          return action.payload;
         }
-        return item
+        return item;
       });
       return {
         ...state,
@@ -68,6 +68,38 @@ const postsReducer = (state = initialState, action: { type: string; payload: any
         items: state.items.filter((item: any) => item.id !== action.payload),
         filteredItems: state.items.filter((item: any) => item.id !== action.payload),
       };
+    }
+    case ACTIONS.POSTS.SET_PAGE: {
+      return {
+        ...state,
+        page: action.payload,
+      };
+    }
+    case ACTIONS.POSTS.SET_FILTERED_ARRAY: {
+      return {
+        ...state,
+        filteredItems: action.payload,
+      };
+    }
+    case ACTIONS.POSTS.CLEAR_FILTERED : {
+      return {
+        ...state,
+        filteredItems: state.items
+      }
+    }
+    case ACTIONS.POSTS.SORT : {
+      return {
+        ...state,
+        filteredItems: state.filteredItems.sort((i1: any, i2: any) => {
+          if (i1[`${action.payload[0]}`] < i2[`${action.payload[0]}`]) {
+            return (-1 * (action.payload[1] === "ASC" ? 1 : -1))
+          }
+          if (i1[`${action.payload[0]}`] > i2[`${action.payload[0]}`]) {
+            return (1 * (action.payload[1] === "ASC" ? 1 : -1))
+          }
+          return 0
+        }),
+      }
     }
     default:
       return state;
