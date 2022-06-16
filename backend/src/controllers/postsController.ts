@@ -38,7 +38,7 @@ export const getPostById = async (request: Request, response: Response): Promise
         id
       }
     });
-    response.status(201).json(customer);
+    response.status(200).json(customer);
   } catch (e: any) {
     response.status(500).json("Something went wrong");
   }
@@ -51,7 +51,7 @@ export const deletePostById = async (request: Request, response: Response): Prom
         id
       }
     });
-    response.status(201).json(`Post #${id} was removed successfully`);
+    response.status(200).json(`Post #${id} was removed successfully`);
   } catch (e: any) {
     response.status(500).json("Something went wrong");
   }
@@ -73,7 +73,7 @@ export const updatePostById = async (request: Request, response: Response): Prom
         id
       }
     });
-    response.status(201).json(post);
+    response.status(200).json(post);
   } catch (e: any) {
     response.status(500).json("Something went wrong");
   }

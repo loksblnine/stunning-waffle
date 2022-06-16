@@ -2,11 +2,10 @@
 export interface Config {
   serviceName: string;
   port: number;
-  loggerLevel: string;
   db: PgConfig;
 }
 
-// dbUtils
+// database utils
 export interface PgConfig {
   user: string;
   database: string;

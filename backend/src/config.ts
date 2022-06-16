@@ -5,7 +5,6 @@ import { Config } from './types';
 export const config: Config = {
   serviceName: process.env.SERVICENAME || 'node typescript postgres app',
   port: Number(process.env.PORT) || 5000,
-  loggerLevel: 'debug',
   db: {
     user: process.env.DB_USER || '',
     database: process.env.DB_DATABASE || '',
