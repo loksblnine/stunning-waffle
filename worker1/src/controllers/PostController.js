@@ -1,5 +1,5 @@
 const models = require("../database/models");
-const sequelize = require("../database/config/index");
+const sequelize = require("../database/config");
 
 const createPost = (postData) => {
   try {
