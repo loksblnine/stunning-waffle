@@ -11,7 +11,7 @@ const CategoryToPostController = require("./controllers/CategoryToPostController
 (function main() {
   const parser = new Parser();
 
-  cron.schedule('* * * * *', async () => {
+  cron.schedule('0 * * * *', async () => {
     const {items} = await parser.parseURL(process.env.RSS_FEED_URL);
     console.log(`[worker1]: main() cron-job at ${new Date()}`, items);
     let promises = [];
