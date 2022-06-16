@@ -1,31 +1,38 @@
-const Parser = require("rss-parser");
+const Parser = require('rss-parser');
 const cron = require('node-cron');
 require('dotenv').config();
 
+const sequelize = require("./database/config/index");
+
 const PostController = require("./controllers/PostController");
 const CategoriesController = require("./controllers/CategoriesController");
+const CategoryToPostController = require("./controllers/CategoryToPostController");
 
 (function main() {
   const parser = new Parser();
-  cron.schedule('0 * * * *', async () => {
+
+  cron.schedule('* * * * *', async () => {
     const {items} = await parser.parseURL(process.env.RSS_FEED_URL);
     console.log(`[worker1]: main() cron-job at ${new Date()}`, items);
-    let categories = [];
     let promises = [];
 
     items.forEach((item) => {
-      promises.push(PostController.createPost(item))
-      categories.push(...item.categories)
+      promises.push(sequelize.transaction(async (t) => {
+        try {
+          const post = await PostController.createPost(item, t);
+          return Promise.all(item.categories.map(async (categoryName) => {
+            const category = await CategoriesController.createCategory(categoryName, t);
+            await CategoryToPostController.createCategoryToPost(post[0].id, category[0].id, t);
+          }))
+        } catch (e) {
+          console.log(e.toString())
+        }
+      }));
     });
-
-    [...new Set(categories)].forEach((item) => {
-      promises.push(CategoriesController.createCategory(item))
-    })
-    console.log(promises.length);
     Promise.all(promises)
       .then(values => {
         console.log(`[worker1]: at ${new Date()} executed ${values.length} promises`);
-      })
+      });
   });
 
 })();

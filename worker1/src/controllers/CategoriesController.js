@@ -1,7 +1,7 @@
 const models = require("../database/models");
 const sequelize = require("../database/config");
 
-const createCategory = (categoryName) => {
+const createCategory = (categoryName, t) => {
   try {
     return models.initModels(sequelize).categories.findOrCreate({
         where: {
@@ -9,11 +9,13 @@ const createCategory = (categoryName) => {
         },
         defaults: {
           name: categoryName
-        }
+        },
+      raw: true,
+        transaction: t
       }
     );
   } catch (e) {
-    console.log("---worker--- [CategoriesController]: createCategory", e.toString());
+    console.log("[worker1]: [CategoriesController]: createCategory", e.toString());
   }
 };
 

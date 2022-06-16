@@ -1,7 +1,7 @@
 const models = require("../database/models");
 const sequelize = require("../database/config");
 
-const createPost = (postData) => {
+const createPost = (postData, t) => {
   try {
     return models.initModels(sequelize).posts.findOrCreate({
         where: {
@@ -15,7 +15,9 @@ const createPost = (postData) => {
           title: postData.title,
           link: postData.link,
           isoDate: postData.pubDate
-        }
+        },
+        raw: true,
+        transaction: t
       }
     );
   } catch (e) {
